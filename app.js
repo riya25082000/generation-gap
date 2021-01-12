@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose');
 const bcrypt= require('bcryptjs');
-const hbs = require('hbs');
+
 const path = require("path");
 const exphbs = require("express-handlebars");
 
@@ -43,9 +43,6 @@ app.set('view engine', '.hbs');
 
 
 
-app.set('view engine', 'html');
-app.engine('html', require('hbs').__express);
-
 app.use('/user', require('./routes/user'));
 
 
@@ -53,8 +50,12 @@ app.get("/", function(req, res) {
   res.end("welcome");
 })
 app.get("/login", function(req, res) {
-  res.render("login");
+  res.render("login", { layout: false });
 })
+app.get("/register", function(req, res) {
+  res.render("register", { layout: false });
+})
+
 
 
 
