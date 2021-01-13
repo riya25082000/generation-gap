@@ -15,25 +15,25 @@ const db ='mongodb+srv://hackathon:online@cluster0.wkx7c.mongodb.net/User?retryW
 
 
 
-mongoose
-.connect(
+// mongoose
+// .connect(
   
-  db,
-  {  
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-     useCreateIndex: true
-  }
+//   db,
+//   {  
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useFindAndModify: false,
+//      useCreateIndex: true
+//   }
 
-)
-.then(() => console.log('MongoDB Connected....'))
-.catch(err => console.log(err));
+// )
+// .then(() => console.log('MongoDB Connected....'))
+// .catch(err => console.log(err));
 
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname,"public")));
+app.use(express.static(path.join(__dirname+"/public")));
 
 app.engine('.hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }));
 app.set('views',path.join( __dirname, "views"));
@@ -47,13 +47,13 @@ app.use('/user', require('./routes/user'));
 
 
 app.get("/", function(req, res) {
-  res.end("welcome");
+  res.sendFile(path.join(__dirname+"/public/views/home.html"))
 })
 app.get("/login", function(req, res) {
-  res.render("login", { layout: false });
+  res.render((path.join(__dirname+'/public/views/login')), { layout: false });
 })
 app.get("/register", function(req, res) {
-  res.render("register", { layout: false });
+  res.render((path.join(__dirname+'/public/views/register')), { layout: false });
 })
 
 

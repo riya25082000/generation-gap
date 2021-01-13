@@ -8,7 +8,7 @@ overflow:hidden;
 background-color: rgb(6,6,34);}
 
 .nav a.hactive{
-//background-color:gray;
+/* //background-color:gray; */
 color:White;
 margin-left:650px;}
 
@@ -37,7 +37,8 @@ color:black;}
  overflow: hidden;
 }
 
-.dropdown .dropbtn {//font-size: 16px;  
+.dropdown .dropbtn {
+  /* //font-size: 16px;   */
   border: none;
   outline: none;
   color: white;
@@ -86,7 +87,7 @@ color: rgb(0,0,0);}
 width:100%;
 font-family:sans-serif;
 justify-content:center;
-//background-color:rgba(6,6,34,0.5);
+/* //background-color:rgba(6,6,34,0.5); */
 margin-top:1%;
 }
 .container h1{
