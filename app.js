@@ -7,28 +7,31 @@ const exphbs = require("express-handlebars");
 
 const app = express()
 
-
+const User=require("./models/User")
 
 
 const db ='mongodb+srv://hackathon:online@cluster0.wkx7c.mongodb.net/User?retryWrites=true&w=majority'
 
 
+// mongoose.connect('mongodb://localhost:27017/hellodb', {useNewUrlParser: true ,useUnifiedTopology: true},()=>{
+//     console.log('MongoDB connected');
+// });
 
 
-// mongoose
-// .connect(
+mongoose
+.connect(
   
-//   db,
-//   {  
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//     useFindAndModify: false,
-//      useCreateIndex: true
-//   }
+  db,
+  {  
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+     useCreateIndex: true
+  }
 
-// )
-// .then(() => console.log('MongoDB Connected....'))
-// .catch(err => console.log(err));
+)
+.then(() => console.log('MongoDB Connected....'))
+.catch(err => console.log(err));
 
 
 app.use(express.json());
@@ -49,12 +52,69 @@ app.use('/user', require('./routes/user'));
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname+"/public/views/home.html"))
 })
+
+
+
+
+
 app.get("/login", function(req, res) {
   res.render((path.join(__dirname+'/public/views/login')), { layout: false });
 })
+
+
+app.post('/login', (req, res) => {
+  User.findOne({ "email": req.body.email}, async (err, user) => {
+      bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
+          if (isMatch) {
+            console.log('Successful login')
+              console.log(user)
+              
+          }
+      })
+
+
+
+  })
+
+
+
+
+  res.redirect('/')
+})
+
+
+
+
 app.get("/register", function(req, res) {
   res.render((path.join(__dirname+'/public/views/register')), { layout: false });
 })
+
+
+app.post('/register', async (req, res) => {
+  bcrypt.genSalt(10, function (err, Salt) {   
+     bcrypt.hash(req.body.password, Salt, function (err, hash) {
+          var user = new User({   
+              username: req.body.username,
+              email: req.body.email,
+              occupation: req.body.occupation,
+              age:req.body.age,
+              password: hash
+          })
+
+          user.save().then(() => { 
+              console.log(user)
+          })
+      })
+  })
+res.redirect('/')
+})
+
+
+
+
+
+
+
 
 
 
